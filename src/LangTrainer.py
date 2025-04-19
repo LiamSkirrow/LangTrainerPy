@@ -8,6 +8,7 @@ userConfigYamlPath = "./config/language.yaml"
 
 # generic modes for function simplification
 MODE_LANG_LIST = 0
+MODE_ADD_LANG  = 1
 
 parser = ArgumentParser()
 # parser.add_argument("-f", "--filename", type=str, required=True)
@@ -15,8 +16,8 @@ parser = ArgumentParser()
 
 parser.add_argument("-l", "--listlangs", action='store_true', help="List the available languages")
 parser.add_argument("-a", "--addlang", type=str, help="Add a language")
-# parser.add_argument("-a", "--rmlang", type=str, help="Remove a language") # seems dangerous lol
-parser.add_argument("-d", "--demo", type=str, 
+parser.add_argument("-r", "--rmlang",  type=str, help="Remove a language") # seems dangerous lol
+parser.add_argument("-d", "--demo",    type=str, 
                     help="Run in demo mode, use a default config YAML file for evaluation purposes")
 
 args = parser.parse_args()
@@ -34,7 +35,8 @@ def dumpYaml(loadedYaml, mode):
 # write to specific YAML data field and reload file, returning read-only file handle
 def writeToYamlFile(data, loadedYaml, yamlFile, mode):
     
-    if(mode == MODE_LANG_LIST):
+    # TODO: need to check for duplicate languages since this would cause issues...
+    if(mode == MODE_ADD_LANG):
         # and print out the new list of available languages
         loadedYaml['languages']['list'].append(data)
 
@@ -54,12 +56,11 @@ if __name__ == "__main__":
 
     # print out the available languages in the user config YAML
     if(list_langs):
-        # TODO: introduce mode arg to make more generic
         dumpYaml(loadedYaml, MODE_LANG_LIST)
     elif(add_lang):
         print("Adding language " + add_lang + " to known languages...\n")
         # add the supplied language to the YAML
-        configYaml = writeToYamlFile(add_lang, loadedYaml, userConfigYamlPath, MODE_LANG_LIST)
+        configYaml = writeToYamlFile(add_lang, loadedYaml, userConfigYamlPath, MODE_ADD_LANG)
         dumpYaml(loadedYaml, MODE_LANG_LIST)
     
 
