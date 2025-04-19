@@ -19,6 +19,22 @@ parser.add_argument("-a", "--addlang", type=str, help="Add a language")
 parser.add_argument("-r", "--rmlang",  type=str, help="Remove a language") # seems dangerous lol
 parser.add_argument("-d", "--demo",    type=str, 
                     help="Run in demo mode, use a default config YAML file for evaluation purposes")
+parser.add_argument("--selectlang", type=str, 
+                    help="Select a language to modify or practice with")
+# TODO: these below args are only valid if a language is selected using --selectlang
+parser.add_argument("--addverb", type=str, 
+                    help="Add a verb to the selected language")
+parser.add_argument("--addnoun", type=str, 
+                    help="Add a noun to the selected language")
+parser.add_argument("--addadj", type=str, 
+                    help="Add a adjective to the selected language")
+parser.add_argument("--addprep", type=str, 
+                    help="Add a preposition to the selected language")
+
+# TODO: add args to dump all verbs, nouns, adjs, preps individually... Also add functionality
+#       to dump uninflected (unconjugated/undeclined) words or alternatively dump with all the inflections
+#       indent nicely to make readable... give total word count etc etc
+# refer to this answer -> https://stackoverflow.com/questions/16967790/argparse-two-arguments-depend-on-each-other/16968580#16968580
 
 args = parser.parse_args()
 
@@ -63,5 +79,3 @@ if __name__ == "__main__":
         configYaml = writeToYamlFile(add_lang, loadedYaml, userConfigYamlPath, MODE_ADD_LANG)
         dumpYaml(loadedYaml, MODE_LANG_LIST)
     
-
-
