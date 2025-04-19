@@ -8,3 +8,4 @@ Features
 
 - add an evaluation mode with a default sample of vocab to get people started who have stumbled upon this project. Add --demo or something with common/basic vocab that most learners are bound to know, that way they can quickly check it out and go from there.
 - should probably contain two yaml files, one is the standard user-specific file that contains all the metadata specific to the individual user (that is gitignored since it's specific to the user and of interest to nobody else), whilst the other *should* be included in the git index and it should contain the (simplified) grammar construct for each supported language... This way the universal grammar yaml (call it the gramml) is tracked and it is available for everyone who stumbles upon the project...
+- specifically for German, it'd be useful to also include possessive pronouns since they also decline based on case... Try to add these in as well!

@@ -51,7 +51,6 @@ def dumpYaml(loadedYaml, mode):
 # write to specific YAML data field and reload file, returning read-only file handle
 def writeToYamlFile(data, loadedYaml, yamlFile, mode):
     
-    # TODO: need to check for duplicate languages since this would cause issues...
     if(mode == MODE_ADD_LANG):
         # and print out the new list of available languages
         loadedYaml['languages']['list'].append(data)
@@ -63,6 +62,7 @@ def writeToYamlFile(data, loadedYaml, yamlFile, mode):
     # lastly, open the file as read-only and return the handler
     configYaml = open(yamlFile, 'r')
     return configYaml
+
 
 if __name__ == "__main__":
     
