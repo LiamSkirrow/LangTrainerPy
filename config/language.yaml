@@ -1,4 +1,17 @@
 languages:
-  list:
-  - Polish
-  - German
+- adjectives: []
+  adjs:
+  name: German
+  nouns:
+  - masc: []
+  - fem: []
+  - neut:
+  preps: []
+  verbs: []
+- adjectives: []
+  name: Polish
+  nouns:
+  prepositions: []
+  verbs:
+- name: Spanish
+  nouns: []

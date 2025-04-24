@@ -2,13 +2,17 @@
 
 from argparse import ArgumentParser
 import yaml
+import pprint
 
 # must be run from the project's top level directory
 userConfigYamlPath = "./config/language.yaml"
 
 # generic modes for function simplification
-MODE_LANG_LIST = 0
-MODE_ADD_LANG  = 1
+MODE_LANG_LIST    = 0
+MODE_ADD_LANG     = 1
+CHECK_LANG_EXISTS = 2
+MODE_ADD_VOCAB    = 3
+MODE_ADD_NOUN     = 4
 
 parser = ArgumentParser()
 # parser.add_argument("-f", "--filename", type=str, required=True)
@@ -16,19 +20,20 @@ parser = ArgumentParser()
 
 parser.add_argument("-l", "--listlangs", action='store_true', help="List the available languages")
 parser.add_argument("-a", "--addlang", type=str, help="Add a language")
+
+# TODO:
 parser.add_argument("-r", "--rmlang",  type=str, help="Remove a language") # seems dangerous lol
 parser.add_argument("-d", "--demo",    type=str, 
                     help="Run in demo mode, use a default config YAML file for evaluation purposes")
-parser.add_argument("--selectlang", type=str, 
-                    help="Select a language to modify or practice with")
-# TODO: these below args are only valid if a language is selected using --selectlang
-parser.add_argument("--addverb", type=str, 
+# TODO:
+
+parser.add_argument("--addverb", type=str, nargs=2,
                     help="Add a verb to the selected language")
-parser.add_argument("--addnoun", type=str, 
+parser.add_argument("--addnoun", type=str, nargs=3,
                     help="Add a noun to the selected language")
-parser.add_argument("--addadj", type=str, 
+parser.add_argument("--addadj", type=str, nargs=2,
                     help="Add a adjective to the selected language")
-parser.add_argument("--addprep", type=str, 
+parser.add_argument("--addprep", type=str, nargs=2,
                     help="Add a preposition to the selected language")
 
 # TODO: add args to dump all verbs, nouns, adjs, preps individually... Also add functionality
@@ -40,20 +45,52 @@ args = parser.parse_args()
 
 list_langs = args.listlangs
 add_lang   = args.addlang
+add_verb   = args.addverb
+add_noun   = args.addnoun
+add_adj    = args.addadj
+add_prep   = args.addprep
 
 # print out the available languages
-def dumpYaml(loadedYaml, mode):
+def inspectYaml(loadedYaml, mode, lang_name):
     if(mode == MODE_LANG_LIST):
         print("Here are the languages in the user YAML file...")
-        for lang in loadedYaml['languages']['list']:
-            print('  ' + lang)
+        for lang in loadedYaml['languages']:
+            print('  ' + lang['name'])
+    elif(mode == CHECK_LANG_EXISTS):
+        for lang in loadedYaml['languages']:
+            # print('Checking \'' +  lang['name']  + '\' against \'' + lang_name + '\'')
+            if(lang['name'] == lang_name):
+                return True
+
 
 # write to specific YAML data field and reload file, returning read-only file handle
-def writeToYamlFile(data, loadedYaml, yamlFile, mode):
-    
+def writeToYamlFile(data, loadedYaml, yamlFile, vocab_class, mode):
+    newEntry = {}
+    iterator = 0
+
     if(mode == MODE_ADD_LANG):
-        # and print out the new list of available languages
-        loadedYaml['languages']['list'].append(data)
+        # first prepare the dict with the new entry
+        newEntry['name'] = data
+        newEntry['nouns'] = []
+        loadedYaml['languages'].append(newEntry)
+    elif(mode == MODE_ADD_VOCAB):
+        # iterate until we find the right language
+        for lang in loadedYaml['languages']:
+            if(lang['name'] == data[0]):
+                # if the language matches, then append the new vocab to the existing vocab list
+                loadedYaml['languages'][iterator][vocab_class].append(data[1])
+                break
+            iterator+=1
+    elif(mode == MODE_ADD_NOUN):
+        # iterate until we find the right language
+        for lang in loadedYaml['languages']:
+            if(lang['name'] == data[0]):
+                # if the language matches, then append the new noun to the noun list
+                # TODO: up to here !!! 
+                # TODO: need to come up with a non hardcoded solution for this...
+                loadedYaml['languages'][iterator][vocab_class][2]['neut'].append(data[1])
+                break
+            iterator+=1
 
     # overwrite the current yaml with the newly modified yaml
     with open(yamlFile, 'w') as configYaml:
@@ -72,10 +109,49 @@ if __name__ == "__main__":
 
     # print out the available languages in the user config YAML
     if(list_langs):
-        dumpYaml(loadedYaml, MODE_LANG_LIST)
+        inspectYaml(loadedYaml, MODE_LANG_LIST)
     elif(add_lang):
         print("Adding language " + add_lang + " to known languages...\n")
         # add the supplied language to the YAML
-        configYaml = writeToYamlFile(add_lang, loadedYaml, userConfigYamlPath, MODE_ADD_LANG)
-        dumpYaml(loadedYaml, MODE_LANG_LIST)
+        configYaml = writeToYamlFile(add_lang, loadedYaml, userConfigYamlPath, '', MODE_ADD_LANG)
+        inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+    elif(add_verb):
+        # check if the user input language exists
+        if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, add_verb[0])):
+            writeToYamlFile(add_verb, loadedYaml, userConfigYamlPath, 'verbs', MODE_ADD_VOCAB)
+        else:
+            print('Unrecognised language \'' + add_verb[0] + '\'...\n')
+            inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+    elif(add_adj):
+        # check if the user input language exists
+        if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, add_adj[0])):
+            writeToYamlFile(add_adj, loadedYaml, userConfigYamlPath, 'adjs', MODE_ADD_VOCAB)
+        else:
+            print('Unrecognised language \'' + add_adj[0] + '\'...\n')
+            inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+    elif(add_prep):
+        # check if the user input language exists
+        if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, add_prep[0])):
+            writeToYamlFile(add_prep, loadedYaml, userConfigYamlPath, 'preps', MODE_ADD_VOCAB)
+        else:
+            print('Unrecognised language \'' + add_prep[0] + '\'...\n')
+            inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+    # nouns are treated a little differently
+    elif(add_noun):
+        # check if the user input language exists
+        if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, add_noun[0])):
+            writeToYamlFile(add_noun, loadedYaml, userConfigYamlPath, 'nouns', MODE_ADD_NOUN)
+        else:
+            print('Unrecognised language \'' + add_noun[0] + '\'...\n')
+            inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+
+
     
+    # pprint.pp(loadedYaml['languages'][0]['nouns'])
+    
+    """
+    - in the YAML, I need to split up all nouns based on their gender so they can be drilled
+      independently. 
+    - (?) also need to store both the singular and plural so they can also be drilled
+    - 
+    """
