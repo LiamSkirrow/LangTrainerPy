@@ -52,15 +52,16 @@ add_prep   = args.addprep
 
 # print out the available languages
 def inspectYaml(loadedYaml, mode, lang_name):
+
     if(mode == MODE_LANG_LIST):
         print("Here are the languages in the user YAML file...")
         for lang in loadedYaml['languages']:
-            print('  ' + lang['name'])
+            print('  ' + lang)
     elif(mode == CHECK_LANG_EXISTS):
-        for lang in loadedYaml['languages']:
-            # print('Checking \'' +  lang['name']  + '\' against \'' + lang_name + '\'')
-            if(lang['name'] == lang_name):
-                return True
+        if lang_name not in loadedYaml['languages']:
+            return False
+        
+    return True
 
 
 # write to specific YAML data field and reload file, returning read-only file handle
@@ -74,23 +75,17 @@ def writeToYamlFile(data, loadedYaml, yamlFile, vocab_class, mode):
         newEntry['nouns'] = []
         loadedYaml['languages'].append(newEntry)
     elif(mode == MODE_ADD_VOCAB):
-        # iterate until we find the right language
-        for lang in loadedYaml['languages']:
-            if(lang['name'] == data[0]):
-                # if the language matches, then append the new vocab to the existing vocab list
-                loadedYaml['languages'][iterator][vocab_class].append(data[1])
-                break
-            iterator+=1
+        # lookup the lang in the dictionary to get the sub-dictionary with the word data
+        lang = loadedYaml['languages'][data[0]]
+        # if the language matches, then append the new vocab to the existing vocab list
+        lang[vocab_class].append(data[1])
     elif(mode == MODE_ADD_NOUN):
-        # iterate until we find the right language
-        for lang in loadedYaml['languages']:
-            if(lang['name'] == data[0]):
-                # if the language matches, then append the new noun to the noun list
-                # TODO: up to here !!! 
-                # TODO: need to come up with a non hardcoded solution for this...
-                loadedYaml['languages'][iterator][vocab_class][2]['neut'].append(data[1])
-                break
-            iterator+=1
+        # lookup the lang in the dictionary to get the sub-dictionary with the word data
+        lang = loadedYaml['languages'][data[0]]
+        # if the language matches, then append the new vocab to the existing vocab list
+        lang['nouns-'+data[2]].append(data[1])
+        # TODO:
+        # TODO: it's very easy to pass in an unregonised gender... this needs a better way of handling things
 
     # overwrite the current yaml with the newly modified yaml
     with open(yamlFile, 'w') as configYaml:
@@ -109,7 +104,7 @@ if __name__ == "__main__":
 
     # print out the available languages in the user config YAML
     if(list_langs):
-        inspectYaml(loadedYaml, MODE_LANG_LIST)
+        inspectYaml(loadedYaml, MODE_LANG_LIST, '')
     elif(add_lang):
         print("Adding language " + add_lang + " to known languages...\n")
         # add the supplied language to the YAML
