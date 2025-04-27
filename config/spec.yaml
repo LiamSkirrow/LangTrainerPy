@@ -10,7 +10,7 @@ specs:
     numGenders: 3
     genders: ['m', 'f', 'n']
     numCases: 4
-    cases: ['nominative', 'accusative', 'dative', 'genitive']
+    cases: ['nominative', 'accusative', 'dative', 'genitive', 'instrumental', 'vocative', 'locative']
     nounsInflect: 1
     verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
   French:
