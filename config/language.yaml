@@ -1,11 +1,1 @@
-languages:
-  German:
-    nouns-f: []
-    nouns-m: []
-    nouns-n: []
-    verbs: []
-  Polish:
-    nouns-f: []
-    nouns-m: []
-    nouns-n: []
-    verbs: []
+languages: {}
