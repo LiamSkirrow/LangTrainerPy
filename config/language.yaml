@@ -1,17 +1,11 @@
 languages:
-- adjectives: []
-  adjs:
-  name: German
-  nouns:
-  - masc: []
-  - fem: []
-  - neut:
-  preps: []
-  verbs: []
-- adjectives: []
-  name: Polish
-  nouns:
-  prepositions: []
-  verbs:
-- name: Spanish
-  nouns: []
+  German:
+    nouns-f: []
+    nouns-m: []
+    nouns-n: []
+    verbs: []
+  Polish:
+    nouns-f: []
+    nouns-m: []
+    nouns-n: []
+    verbs: []
