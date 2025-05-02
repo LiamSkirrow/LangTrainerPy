@@ -16,3 +16,6 @@ Features
   - the correct/incorrect response rate should be stored for each session and given at the end of the week maybe?
 - optionally --freemode can be supplied and additional args can narrow down the specific area of study, be it verb conjugations or declining nouns for a specific subset of genders etc, things like that.
   - the responses to these drills should not affect the answer rate statistics for the schedule mode, they should be independent.
+
+## Extension Modes
+- include a Pimsleur-like mode, that reads out with a TTS engine, the random assortment of sentences (somehow only reading out the valid generated sentences that you'd actually find in the real world), and waiting with a short pause, for the user to repeat out loud. Maybe include the English version, and then make the user say the spoken version out loud before playing it via the TTS engine or something like this. This would force the user to come up with the conjugations and declensions on the spot, which would be invaluable practice.
