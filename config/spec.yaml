@@ -6,6 +6,13 @@ specs:
     cases: ['nominative', 'accusative', 'dative', 'genitive']
     nounsInflect: 0
     verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
+  Russian:
+    numGenders: 3
+    genders: ['m', 'f', 'n']
+    numCases: 6
+    cases: ['nominative', 'accusative', 'dative', 'genitive', 'instrumental', 'prepositional']
+    nounsInflect: 1
+    verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']  
   Polish:
     numGenders: 3
     genders: ['m', 'f', 'n']
