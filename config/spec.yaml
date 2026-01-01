@@ -27,8 +27,17 @@ specs:
     cases: []
     nounsInflect: 0
     verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
+  Spanish:
+    numGenders: 2
+    genders: ['m', 'f']
+    numCases: 0
+    cases: []
+    nounsInflect: 0
+    verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
 
 
+# TODO:
+# use English as a control, create langspec above for EN
 
 
 # Key
