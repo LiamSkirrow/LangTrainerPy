@@ -1,0 +1,46 @@
+verbs: []          # to speak
+
+verbs-present-1ppl: {}     # we speak
+verbs-present-1psing: {}   # I speak
+verbs-present-2pfam: {}    # you speak
+verbs-present-2pfampl: {}  # you speak
+verbs-present-2ppol: {}    # you speak
+verbs-present-2ppolpl: {}  # you speak
+verbs-present-3ppl: {}     # they speak
+verbs-present-3psing: {}   # he/she/it speaks
+
+verbs-future-1ppl: {}     # we will speak
+verbs-future-1psing: {}   # I will speak
+verbs-future-2pfam: {}    # you will speak
+verbs-future-2pfampl: {}  # you will speak
+verbs-future-2ppol: {}    # you will speak
+verbs-future-2ppolpl: {}  # you will speak
+verbs-future-3ppl: {}     # they will speak
+verbs-future-3psing: {}   # he/she/it will speak
+
+verbs-simple-past-1ppl: {}     # we spoke
+verbs-simple-past-1psing: {}   # I spoke
+verbs-simple-past-2pfam: {}    # you spoke
+verbs-simple-past-2pfampl: {}  # you spoke
+verbs-simple-past-2ppol: {}    # you spoke
+verbs-simple-past-2ppolpl: {}  # you spoke
+verbs-simple-past-3ppl: {}     # they spoke
+verbs-simple-past-3psing: {}   # he/she/it spoke
+
+verbs-imp-past-1ppl: {}     # we were speaking
+verbs-imp-past-1psing: {}   # I was speaking
+verbs-imp-past-2pfam: {}    # you were speaking
+verbs-imp-past-2pfampl: {}  # you were speaking
+verbs-imp-past-2ppol: {}    # you were speaking
+verbs-imp-past-2ppolpl: {}  # you were speaking
+verbs-imp-past-3ppl: {}     # they were speaking
+verbs-imp-past-3psing: {}   # he/she/it was speaking
+
+verbs-conditional-1ppl: {}     # we would speak
+verbs-conditional-1psing: {}   # I would speak
+verbs-conditional-2pfam: {}    # you would speak
+verbs-conditional-2pfampl: {}  # you would speak
+verbs-conditional-2ppol: {}    # you would speak
+verbs-conditional-2ppolpl: {}  # you would speak
+verbs-conditional-3ppl: {}     # they would speak
+verbs-conditional-3psing: {}   # he/she/it would speak

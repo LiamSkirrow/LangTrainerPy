@@ -84,7 +84,11 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         # add the (conjugated) verbs list(s)
         newEntry['verbs'] = []
         for subject in loadedSpecYaml['specs'][data]['verbConjugations']:
-            newEntry['verbs-'+subject] = {}
+            for tense in loadedSpecYaml['specs'][data]['tenses']:
+                newEntry['verbs-'+tense+'-'+subject] = {}
+        # get the English infinitive and simple past
+        newEntry['verbs-en-inf']         = {}
+        newEntry['verbs-en-simple-past'] = {}
         # add the preposition list and dict (if cases are used in the lang)
         newEntry['preps'] = []
         if(loadedSpecYaml['specs'][data]['numCases'] > 0):
@@ -120,9 +124,12 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         langSpec = loadedSpecYaml['specs'][data[0]]
         # append the new vocab to the existing vocab list
         lang['verbs'].append(data[1])
+        lang['verbs-en-inf'][data[1]]         = input('Enter English infinitive: ')
+        lang['verbs-en-simple-past'][data[1]] = input('Enter English simple past: ')
         # enter the different conjugated forms of the verbs
         for subject in langSpec['verbConjugations']:
-            lang['verbs-'+subject][data[1]] = input(subject + ': ')
+            for tense in langSpec['tenses']:
+                lang['verbs-'+tense+'-'+subject][data[1]] = input(subject + ': ')
     elif(mode == MODE_ADD_PREP):
         # lookup the lang in the dictionary to get the sub-dictionary with the word data
         lang = loadedYaml['languages'][data[0]]
@@ -217,3 +224,14 @@ if __name__ == "__main__":
     # enter training mode, drill the existing vocab in randomly formed sentences
     elif(train):
         pass
+        # TODO: note:
+        # I need to include the English translations for each conjugation+tense so that I know what to print out
+        # as the prompt. I also need to include another property for tense=[past, present, future] and also aspect=[perf, imperf]
+        # for the Slavic languages...
+        
+        # check that the supplied language exists
+
+        # given the training mode -> nouns, verbs, sentences etc...
+        # randomly select one to display, giving the English prompt first and expecting the target language input
+
+        # do a check on the user supplied input, and determine (in)correct status, print out accordingly, loop back to top

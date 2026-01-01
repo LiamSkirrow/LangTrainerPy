@@ -34,6 +34,7 @@ specs:
     cases: []
     nounsInflect: 0
     verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
+    tenses: ['present', 'future', 'simple-past', 'imp-past', 'conditional']
 
 
 # TODO:
