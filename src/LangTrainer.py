@@ -56,6 +56,34 @@ add_adj    = args.addadj
 add_prep   = args.addprep
 train      = args.train
 
+# TODO: this is a clunky helper function that would be better included in a separate file to reduce clutter here...
+# return the correct verb ending
+def derive_ending(lang, subject, tense):
+    if(lang == 'Spanish'):
+        print('iii Spanish detected !!!')
+        if(tense == 'conditional'):
+            if(subject == '1psing'):
+                retval = 'ia'
+            elif(subject == '1ppl'):
+                retval = 'iamos'
+            elif(subject == '2pfam'):
+                retval = 'ias'
+            elif(subject == '2pfampl'):
+                retval = 'ian'
+            elif(subject == '2ppol'):
+                retval = 'ia'
+            elif(subject == '2ppolpl'):
+                retval = 'ian'
+            elif(subject == '3psing'):
+                retval = 'ia'
+            elif(subject == '3ppl'):
+                retval = 'ian'
+            else:
+                print('Unrecognised subject! Bug detected, exiting...')
+                exit(0)
+    
+    return retval
+
 # print out the available languages
 def inspectYaml(loadedYaml, mode, lang_name):
 
@@ -128,8 +156,13 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         lang['verbs-en-simple-past'][data[1]] = input('Enter English simple past: ')
         # enter the different conjugated forms of the verbs
         for subject in langSpec['verbConjugations']:
-            for tense in langSpec['tenses']:
-                lang['verbs-'+tense+'-'+subject][data[1]] = input(subject + ': ')
+            # for tense in langSpec['tenses']:
+            lang['verbs-present-'+subject][data[1]] = input('present '+subject+': ')
+        
+        # automatically fill in the conditional verb tense
+        for subject in langSpec['verbConjugations']:
+            lang['verbs-conditional-'+subject][data[1]] = data[1] + derive_ending(data[0], subject, 'conditional')
+
     elif(mode == MODE_ADD_PREP):
         # lookup the lang in the dictionary to get the sub-dictionary with the word data
         lang = loadedYaml['languages'][data[0]]
