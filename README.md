@@ -1,6 +1,10 @@
 # LangTrainerPy
 A more simple version of what my LangTrainer desktop app was aiming to be...
 
+### TODO
+- Spanish:
+  - there are additional tenses that can only be expressed with the subjunctive. This needs to be implemented too, things like "will have eaten", or the variations on the imperative mood for example.
+
 ## Default Behaviour
 - This is a language practice program, optimised for *drilling* a given target language. It is *not* intended for memorisation of vocab, that's a job for Anki. LangTrainer is dead simple, it allows you to enter in (primarily) nouns and verbs for a specific language, and it will then present you these same (primarily) nouns and verbs, asking you to conjugate/decline them accordingly and notifying you when/if you get any wrong. That's it... 
 
