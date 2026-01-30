@@ -23,3 +23,13 @@ Features
 
 ## Extension Modes
 - include a Pimsleur-like mode, that reads out with a TTS engine, the random assortment of sentences (somehow only reading out the valid generated sentences that you'd actually find in the real world), and waiting with a short pause, for the user to repeat out loud. Maybe include the English version, and then make the user say the spoken version out loud before playing it via the TTS engine or something like this. This would force the user to come up with the conjugations and declensions on the spot, which would be invaluable practice.
+
+## Roadmap
+Currently, I have the remaining tasks to complete before I can use this to drill verbs conjugations:
+- Complete the derive_ending() function for all the tenses in Spanish and German. For Spanish, these remaining tenses are: future, pres. perfect (past participle), preterite and imperfect.
+- Implement the drill functionality. Iterate over the stored words in the target language and drill the verb conjugations.
+  - randomly select an infinitive, randomly select a tense, randomly select a conjugation, present the english verb (to be, will be, was, were etc.) and indicate the subject conjugation.
+    the tense will be indicated by the English word, but we need to indicate the subject conjugation in brackets.
+  - might want to mark this combo of infinitive, conjugation, tense as complete so that it doesn't get generated again. If a combination is generated that's already been tested, just continue to the top of the loop and randomly generate again from scratch (the time complexity is negligible)
+  - if answered right, then return to top of loop and repeat, if answered wrong then might need to store this combination and assess it later. Might want to indicate how many incorrect cards are in the backlog ready to be re-assessed. This would be handy for the user to know since they might not want to quit the practice session early if they have re-assess cards pending.
+- German noun declensions would be handy and the implementation would probably resemble that of the verb conjugations anyway so quite simple.
