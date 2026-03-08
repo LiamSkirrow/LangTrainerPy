@@ -19,6 +19,7 @@ MODE_ADD_PREP     = 6
 MODE_ADD_VERB     = 7
 MODE_GET_VERB     = 8
 MODE_GET_VERBS    = 9
+MODE_EDIT_VERB    = 10
 
 parser = ArgumentParser()
 # parser.add_argument("-f", "--filename", type=str, required=True)
@@ -108,9 +109,6 @@ def readFromYamlFile(data, loadedYaml, loadedSpecYaml, mode):
                 print(tense + ', ' + subject + ': ' + lang['verbs-'+tense+'-'+subject][data[1]])
             print() # newline
 
-
-
-
 # write to specific YAML data field and reload file, returning read-only file handle
 def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mode):
     newEntry = {}
@@ -139,9 +137,6 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
 
         # finally, add the new language dictionary
         loadedYaml['languages'][data] = newEntry
-
-    # TODO: move declaration of lang and langSpec to top of this function
-    # TODO: instead of duplicating across all the elifs below
 
     elif(mode == MODE_ADD_NOUN):
         # lookup the lang in the dictionary to get the sub-dictionary with the word data
@@ -181,12 +176,22 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         # enter the required case to be used in conjunction with the preposition
         lang['prep-cases'][data[1]] = input('Required case: ')
     elif(mode == MODE_ADD_ADJ):
-        # lookup the lang in the dictionary to get the sub-dictionary with the word data
-        lang = loadedYaml['languages'][data[0]]
-        langSpec = loadedSpecYaml['specs'][data[0]]
         # append the new vocab to the existing vocab list
         lang['adjs'].append(data[1])
 
+    elif(mode == MODE_EDIT_VERB):
+        # lookup the lang in the dictionary to get the sub-dictionary with the word data
+        lang = loadedYaml['languages'][data[0]]
+        langSpec = loadedSpecYaml['specs'][data[0]]
+        # search for every conjugated version of the supplied 
+        for tense in langSpec['tenses']:
+            for subject in langSpec['verbConjugations']:
+                print(tense + ', ' + subject + ': ' + lang['verbs-'+tense+'-'+subject][data[1]] + ' -> ', end='')
+                user_resp = input()
+                if(user_resp == ''):
+                    continue
+                else:
+                    lang['verbs-'+tense+'-'+subject][data[1]] = user_resp
 
     # overwrite the current yaml with the newly modified yaml
     with open(yamlFile, 'w') as configYaml:
@@ -260,7 +265,7 @@ if __name__ == "__main__":
         if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, get_verb[0])):
             readFromYamlFile(get_verb, loadedYaml, loadedSpecYaml, MODE_GET_VERB)
         else:
-            print('Unrecognised language \'' + add_noun[0] + '\'...\n')
+            print('Unrecognised language \'' + get_verb[0] + '\'...\n')
             inspectYaml(loadedYaml, MODE_LANG_LIST, '')
 
     elif(get_verbs):
@@ -268,10 +273,18 @@ if __name__ == "__main__":
         if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, get_verbs[0])):
             readFromYamlFile(get_verbs, loadedYaml, loadedSpecYaml, MODE_GET_VERBS)
         else:
-            print('Unrecognised language \'' + add_noun[0] + '\'...\n')
+            print('Unrecognised language \'' + get_verbs[0] + '\'...\n')
             inspectYaml(loadedYaml, MODE_LANG_LIST, '')
 
     # TODO: get the remainder of the vocab classes, not just for verbs!
+
+    elif(edit_verb):
+        # check if the user input language exists
+        if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, edit_verb[0])):
+            writeToYamlFile(edit_verb, loadedYaml, loadedSpecYaml, userConfigYamlPath, 'nouns', MODE_EDIT_VERB)
+        else:
+            print('Unrecognised language \'' + edit_verb[0] + '\'...\n')
+            inspectYaml(loadedYaml, MODE_LANG_LIST, '')
 
 
 
