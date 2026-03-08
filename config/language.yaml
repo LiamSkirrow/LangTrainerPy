@@ -4,62 +4,94 @@ languages:
     nouns-f: []
     nouns-m: []
     preps: []
-    verbs: [hablar]
-    verbs-conditional-1ppl: {hablar: "hablar\xEDamos"}
-    verbs-conditional-1psing: {hablar: "hablar\xEDa"}
-    verbs-conditional-2pfam: {hablar: "hablar\xEDas"}
-    verbs-conditional-2pfampl: {hablar: "hablar\xEDan"}
-    verbs-conditional-2ppol: {hablar: "hablar\xEDa"}
-    verbs-conditional-2ppolpl: {hablar: "hablar\xEDan"}
-    verbs-conditional-3ppl: {hablar: "hablar\xEDan"}
-    verbs-conditional-3psing: {hablar: "hablar\xEDa"}
-    verbs-en-inf: {hablar: speak}
-    verbs-en-simple-past: {hablar: spoke}
-    verbs-future-1ppl: {hablar: hablaremos}
-    verbs-future-1psing: {hablar: "hablar\xE9"}
-    verbs-future-2pfam: {hablar: "hablar\xE1s"}
-    verbs-future-2pfampl: {hablar: "hablar\xE1n"}
-    verbs-future-2ppol: {hablar: "hablar\xE1"}
-    verbs-future-2ppolpl: {hablar: "hablar\xE1n"}
-    verbs-future-3ppl: {hablar: "hablar\xE1n"}
-    verbs-future-3psing: {hablar: "hablar\xE1"}
-    verbs-imperfect-past-1ppl: {hablar: hablabamos}
-    verbs-imperfect-past-1psing: {hablar: hablaba}
-    verbs-imperfect-past-2pfam: {hablar: hablabas}
-    verbs-imperfect-past-2pfampl: {hablar: hablaban}
-    verbs-imperfect-past-2ppol: {hablar: hablaba}
-    verbs-imperfect-past-2ppolpl: {hablar: hablaban}
-    verbs-imperfect-past-3ppl: {hablar: hablaban}
-    verbs-imperfect-past-3psing: {hablar: hablaba}
-    verbs-present-1ppl: {hablar: hablamos}
-    verbs-present-1psing: {hablar: hablo}
-    verbs-present-2pfam: {hablar: hablas}
-    verbs-present-2pfampl: {hablar: hablan}
-    verbs-present-2ppol: {hablar: habla}
-    verbs-present-2ppolpl: {hablar: hablan}
-    verbs-present-3ppl: {hablar: hablan}
-    verbs-present-3psing: {hablar: habla}
-    verbs-present-cont-1ppl: {hablar: estamos hablando}
-    verbs-present-cont-1psing: {hablar: estoy hablando}
-    verbs-present-cont-2pfam: {hablar: estas hablando}
-    verbs-present-cont-2pfampl: {hablar: estan hablando}
-    verbs-present-cont-2ppol: {hablar: esta hablando}
-    verbs-present-cont-2ppolpl: {hablar: estan hablando}
-    verbs-present-cont-3ppl: {hablar: estan hablando}
-    verbs-present-cont-3psing: {hablar: esta hablando}
-    verbs-present-perf-1ppl: {hablar: hemos hablado}
-    verbs-present-perf-1psing: {hablar: he hablado}
-    verbs-present-perf-2pfam: {hablar: has hablado}
-    verbs-present-perf-2pfampl: {hablar: han hablado}
-    verbs-present-perf-2ppol: {hablar: ha hablado}
-    verbs-present-perf-2ppolpl: {hablar: han hablado}
-    verbs-present-perf-3ppl: {hablar: han hablado}
-    verbs-present-perf-3psing: {hablar: ha hablado}
-    verbs-simple-past-1ppl: {hablar: hablamos}
-    verbs-simple-past-1psing: {hablar: "habl\xE9"}
-    verbs-simple-past-2pfam: {hablar: hablaste}
-    verbs-simple-past-2pfampl: {hablar: hablaron}
-    verbs-simple-past-2ppol: {hablar: "habl\xF3"}
-    verbs-simple-past-2ppolpl: {hablar: hablaron}
-    verbs-simple-past-3ppl: {hablar: hablaron}
-    verbs-simple-past-3psing: {hablar: "habl\xF3"}
+    verbs: [hablar, comer, vivir]
+    verbs-conditional-1ppl: {comer: "comer\xEDamos", hablar: "hablar\xEDamos", vivir: "vivir\xED\
+        amos"}
+    verbs-conditional-1psing: {comer: "comer\xEDa", hablar: "hablar\xEDa", vivir: "vivir\xED\
+        a"}
+    verbs-conditional-2pfam: {comer: "comer\xEDas", hablar: "hablar\xEDas", vivir: "vivir\xED\
+        as"}
+    verbs-conditional-2pfampl: {comer: "comer\xEDan", hablar: "hablar\xEDan", vivir: "vivir\xED\
+        an"}
+    verbs-conditional-2ppol: {comer: "comer\xEDa", hablar: "hablar\xEDa", vivir: "vivir\xED\
+        a"}
+    verbs-conditional-2ppolpl: {comer: "comer\xEDan", hablar: "hablar\xEDan", vivir: "vivir\xED\
+        an"}
+    verbs-conditional-3ppl: {comer: "comer\xEDan", hablar: "hablar\xEDan", vivir: "vivir\xED\
+        an"}
+    verbs-conditional-3psing: {comer: "comer\xEDa", hablar: "hablar\xEDa", vivir: "vivir\xED\
+        a"}
+    verbs-en-inf: {comer: eat, hablar: speak, vivir: live}
+    verbs-en-simple-past: {comer: ate, hablar: spoke, vivir: lived}
+    verbs-future-1ppl: {comer: comeremos, hablar: hablaremos, vivir: viviremos}
+    verbs-future-1psing: {comer: "comer\xE9", hablar: "hablar\xE9", vivir: "vivir\xE9"}
+    verbs-future-2pfam: {comer: "comer\xE1s", hablar: "hablar\xE1s", vivir: "vivir\xE1\
+        s"}
+    verbs-future-2pfampl: {comer: "comer\xE1n", hablar: "hablar\xE1n", vivir: "vivir\xE1\
+        n"}
+    verbs-future-2ppol: {comer: "comer\xE1", hablar: "hablar\xE1", vivir: "vivir\xE1"}
+    verbs-future-2ppolpl: {comer: "comer\xE1n", hablar: "hablar\xE1n", vivir: "vivir\xE1\
+        n"}
+    verbs-future-3ppl: {comer: "comer\xE1n", hablar: "hablar\xE1n", vivir: "vivir\xE1\
+        n"}
+    verbs-future-3psing: {comer: "comer\xE1", hablar: "hablar\xE1", vivir: "vivir\xE1"}
+    verbs-imperfect-past-1ppl: {comer: "com\xEDamos", hablar: hablabamos, vivir: "viv\xED\
+        amos"}
+    verbs-imperfect-past-1psing: {comer: "com\xEDa", hablar: hablaba, vivir: "viv\xED\
+        a"}
+    verbs-imperfect-past-2pfam: {comer: "com\xEDas", hablar: hablabas, vivir: "viv\xED\
+        as"}
+    verbs-imperfect-past-2pfampl: {comer: "com\xEDan", hablar: hablaban, vivir: "viv\xED\
+        an"}
+    verbs-imperfect-past-2ppol: {comer: "com\xEDa", hablar: hablaba, vivir: "viv\xED\
+        a"}
+    verbs-imperfect-past-2ppolpl: {comer: "com\xEDan", hablar: hablaban, vivir: "viv\xED\
+        an"}
+    verbs-imperfect-past-3ppl: {comer: "com\xEDan", hablar: hablaban, vivir: "viv\xED\
+        an"}
+    verbs-imperfect-past-3psing: {comer: "com\xEDa", hablar: hablaba, vivir: "viv\xED\
+        a"}
+    verbs-present-1ppl: {comer: comemos, hablar: hablamos, vivir: vivimos}
+    verbs-present-1psing: {comer: como, hablar: hablo, vivir: vivo}
+    verbs-present-2pfam: {comer: comes, hablar: hablas, vivir: vives}
+    verbs-present-2pfampl: {comer: comen, hablar: hablan, vivir: viven}
+    verbs-present-2ppol: {comer: come, hablar: habla, vivir: vive}
+    verbs-present-2ppolpl: {comer: comen, hablar: hablan, vivir: viven}
+    verbs-present-3ppl: {comer: comen, hablar: hablan, vivir: viven}
+    verbs-present-3psing: {comer: come, hablar: habla, vivir: vive}
+    verbs-present-cont-1ppl: {comer: estamos comiendo, hablar: estamos hablando, vivir: estamos
+        viviendo}
+    verbs-present-cont-1psing: {comer: estoy comiendo, hablar: estoy hablando, vivir: estoy
+        viviendo}
+    verbs-present-cont-2pfam: {comer: estas comiendo, hablar: estas hablando, vivir: estas
+        viviendo}
+    verbs-present-cont-2pfampl: {comer: estan comiendo, hablar: estan hablando, vivir: estan
+        viviendo}
+    verbs-present-cont-2ppol: {comer: esta comiendo, hablar: esta hablando, vivir: esta
+        viviendo}
+    verbs-present-cont-2ppolpl: {comer: estan comiendo, hablar: estan hablando, vivir: estan
+        viviendo}
+    verbs-present-cont-3ppl: {comer: estan comiendo, hablar: estan hablando, vivir: estan
+        viviendo}
+    verbs-present-cont-3psing: {comer: esta comiendo, hablar: esta hablando, vivir: esta
+        viviendo}
+    verbs-present-perf-1ppl: {comer: hemos comido, hablar: hemos hablado, vivir: hemos
+        vivido}
+    verbs-present-perf-1psing: {comer: he comido, hablar: he hablado, vivir: he vivido}
+    verbs-present-perf-2pfam: {comer: has comido, hablar: has hablado, vivir: has
+        vivido}
+    verbs-present-perf-2pfampl: {comer: han comido, hablar: han hablado, vivir: han
+        vivido}
+    verbs-present-perf-2ppol: {comer: ha comido, hablar: ha hablado, vivir: ha vivido}
+    verbs-present-perf-2ppolpl: {comer: han comido, hablar: han hablado, vivir: han
+        vivido}
+    verbs-present-perf-3ppl: {comer: han comido, hablar: han hablado, vivir: han vivido}
+    verbs-present-perf-3psing: {comer: ha comido, hablar: ha hablado, vivir: ha vivido}
+    verbs-simple-past-1ppl: {comer: comimos, hablar: hablamos, vivir: vivimos}
+    verbs-simple-past-1psing: {comer: "com\xED", hablar: "habl\xE9", vivir: "viv\xED"}
+    verbs-simple-past-2pfam: {comer: comiste, hablar: hablaste, vivir: viviste}
+    verbs-simple-past-2pfampl: {comer: comieron, hablar: hablaron, vivir: vivieron}
+    verbs-simple-past-2ppol: {comer: "comi\xF3", hablar: "habl\xF3", vivir: "vivi\xF3"}
+    verbs-simple-past-2ppolpl: {comer: comieron, hablar: hablaron, vivir: vivieron}
+    verbs-simple-past-3ppl: {comer: comieron, hablar: hablaron, vivir: vivieron}
+    verbs-simple-past-3psing: {comer: "comi\xF3", hablar: "habl\xF3", vivir: "vivi\xF3"}

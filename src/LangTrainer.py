@@ -17,6 +17,8 @@ MODE_ADD_NOUN     = 4
 MODE_ADD_ADJ      = 5
 MODE_ADD_PREP     = 6
 MODE_ADD_VERB     = 7
+MODE_GET_VERB     = 8
+MODE_GET_VERBS    = 9
 
 parser = ArgumentParser()
 # parser.add_argument("-f", "--filename", type=str, required=True)
@@ -38,6 +40,21 @@ parser.add_argument("--addadj", type=str, nargs=2,
 parser.add_argument("--addprep", type=str, nargs=2,
                     help="Add a preposition to the selected language")
 
+parser.add_argument("--getverb", type=str, nargs=2,
+                    help="Get a specific verb from the selected language")
+parser.add_argument("--getverbs", type=str, nargs=1,
+                    help="Get all verbs from the selected language")
+# TODO: do this ^^^ for the rest of the classes of vocabulary
+
+parser.add_argument("--editverb", type=str, nargs=2,
+                    help="Edit a verb from the selected language")
+# parser.add_argument("--addnoun", type=str, nargs=2,
+#                     help="Edit a noun from the selected language")
+# parser.add_argument("--addadj", type=str, nargs=2,
+#                     help="Edit a adjective from the selected language")
+# parser.add_argument("--addprep", type=str, nargs=2,
+#                     help="Edit a preposition from the selected language")
+
 parser.add_argument("-t", "--train", type=str, nargs=2,
                     help="Enter training mode, drill existing vocab")
 
@@ -54,6 +71,12 @@ add_verb   = args.addverb
 add_noun   = args.addnoun
 add_adj    = args.addadj
 add_prep   = args.addprep
+edit_verb  = args.editverb
+# edit_noun  = args.editnoun
+# edit_adj   = args.editadj
+# edit_prep  = args.editprep
+get_verb   = args.getverb
+get_verbs  = args.getverbs
 train      = args.train
 
 # print out the available languages
@@ -68,6 +91,24 @@ def inspectYaml(loadedYaml, mode, lang_name):
             return False
         
     return True
+
+# write to specific YAML data field and reload file, returning read-only file handle
+def readFromYamlFile(data, loadedYaml, loadedSpecYaml, mode):
+    # lookup the lang and lang spec
+    lang = loadedYaml['languages'][data[0]]
+    langSpec = loadedSpecYaml['specs'][data[0]]
+
+    if(mode == MODE_GET_VERBS):
+        print(lang['verbs'])
+
+    elif(mode == MODE_GET_VERB):
+        # search for every conjugated version of the supplied 
+        for tense in langSpec['tenses']:
+            for subject in langSpec['verbConjugations']:
+                print(tense + ', ' + subject + ': ' + lang['verbs-'+tense+'-'+subject][data[1]])
+            print() # newline
+
+
 
 
 # write to specific YAML data field and reload file, returning read-only file handle
@@ -130,9 +171,6 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         for tense in langSpec['tenses']:
             for subject in langSpec['verbConjugations']:
                 lang['verbs-'+tense+'-'+subject][data[1]] = derive_ending(data[0], data[1], 'verb', subject, tense)
-        
-        # TODO:
-        # - add arguments for '--editverb' etc
 
     elif(mode == MODE_ADD_PREP):
         # lookup the lang in the dictionary to get the sub-dictionary with the word data
@@ -148,7 +186,6 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         langSpec = loadedSpecYaml['specs'][data[0]]
         # append the new vocab to the existing vocab list
         lang['adjs'].append(data[1])
-            
 
 
     # overwrite the current yaml with the newly modified yaml
@@ -217,6 +254,27 @@ if __name__ == "__main__":
         else:
             print('Unrecognised language \'' + add_noun[0] + '\'...\n')
             inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+
+    elif(get_verb):
+        # check if the user input language exists
+        if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, get_verb[0])):
+            readFromYamlFile(get_verb, loadedYaml, loadedSpecYaml, MODE_GET_VERB)
+        else:
+            print('Unrecognised language \'' + add_noun[0] + '\'...\n')
+            inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+
+    elif(get_verbs):
+        # check if the user input language exists
+        if(inspectYaml(loadedYaml, CHECK_LANG_EXISTS, get_verbs[0])):
+            readFromYamlFile(get_verbs, loadedYaml, loadedSpecYaml, MODE_GET_VERBS)
+        else:
+            print('Unrecognised language \'' + add_noun[0] + '\'...\n')
+            inspectYaml(loadedYaml, MODE_LANG_LIST, '')
+
+    # TODO: get the remainder of the vocab classes, not just for verbs!
+
+
+
 
     # TODO:
     # we're up to the implementation of the training mode now...
