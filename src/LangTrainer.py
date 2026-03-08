@@ -3,7 +3,6 @@
 from argparse import ArgumentParser
 import yaml
 from helperFunctions import derive_ending
-import pprint
 
 # must be run from the project's top level directory
 userConfigYamlPath = "./config/language.yaml"
@@ -127,18 +126,18 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         lang['verbs'].append(data[1])
         lang['verbs-en-inf'][data[1]]         = input('Enter English infinitive: ')
         lang['verbs-en-simple-past'][data[1]] = input('Enter English simple past: ')
-        # enter the different conjugated forms of the verbs
+        # automatically fill in the verb tenses
         for subject in langSpec['verbConjugations']:
-            # for tense in langSpec['tenses']:
-            lang['verbs-present-'+subject][data[1]] = input('present '+subject+': ')
-        
-        # automatically fill in the conditional verb tense
-        for subject in langSpec['verbConjugations']:
-            lang['verbs-conditional-'+subject][data[1]] = data[1] + derive_ending(data[0], subject, 'conditional')
+            lang['verbs-present-'+subject][data[1]]        = derive_ending(data[0], data[1], 'verb', subject, 'present')
+            lang['verbs-conditional-'+subject][data[1]]    = derive_ending(data[0], data[1], 'verb', subject, 'conditional')
+            lang['verbs-future-'+subject][data[1]]         = derive_ending(data[0], data[1], 'verb', subject, 'future')
+            lang['verbs-simple-past-'+subject][data[1]]    = derive_ending(data[0], data[1], 'verb', subject, 'simple-past')
+            lang['verbs-present-cont-'+subject][data[1]]   = derive_ending(data[0], data[1], 'verb', subject, 'present-cont')
+            lang['verbs-present-perf-'+subject][data[1]]   = derive_ending(data[0], data[1], 'verb', subject, 'present-perf')
+            lang['verbs-imperfect-past-'+subject][data[1]] = derive_ending(data[0], data[1], 'verb', subject, 'imperfect-past')
         
         # TODO:
-        # TODO: UP TO HERE!!! Need to add the remainder of the tenses here!!!
-        # TODO:
+        # - add arguments for '--editverb' etc
 
     elif(mode == MODE_ADD_PREP):
         # lookup the lang in the dictionary to get the sub-dictionary with the word data
