@@ -126,15 +126,10 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         lang['verbs'].append(data[1])
         lang['verbs-en-inf'][data[1]]         = input('Enter English infinitive: ')
         lang['verbs-en-simple-past'][data[1]] = input('Enter English simple past: ')
-        # automatically fill in the verb tenses
-        for subject in langSpec['verbConjugations']:
-            lang['verbs-present-'+subject][data[1]]        = derive_ending(data[0], data[1], 'verb', subject, 'present')
-            lang['verbs-conditional-'+subject][data[1]]    = derive_ending(data[0], data[1], 'verb', subject, 'conditional')
-            lang['verbs-future-'+subject][data[1]]         = derive_ending(data[0], data[1], 'verb', subject, 'future')
-            lang['verbs-simple-past-'+subject][data[1]]    = derive_ending(data[0], data[1], 'verb', subject, 'simple-past')
-            lang['verbs-present-cont-'+subject][data[1]]   = derive_ending(data[0], data[1], 'verb', subject, 'present-cont')
-            lang['verbs-present-perf-'+subject][data[1]]   = derive_ending(data[0], data[1], 'verb', subject, 'present-perf')
-            lang['verbs-imperfect-past-'+subject][data[1]] = derive_ending(data[0], data[1], 'verb', subject, 'imperfect-past')
+        # automatically fill in all the verb tenses that exist in the language, for every possible subject
+        for tense in langSpec['tenses']:
+            for subject in langSpec['verbConjugations']:
+                lang['verbs-'+tense+'-'+subject][data[1]] = derive_ending(data[0], data[1], 'verb', subject, tense)
         
         # TODO:
         # - add arguments for '--editverb' etc
