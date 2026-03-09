@@ -1,3 +1,5 @@
+import random
+
 # return the correct verb ending, depending on the language, tense and subject
 def derive_ending(lang, word, mode, subject, tense):
     if(lang == 'Spanish'):
@@ -261,3 +263,25 @@ def derive_ending(lang, word, mode, subject, tense):
                 print('Unrecognised tense!')
     
     return retval
+
+# given the language and the subject, return the relevant pronoun
+def map_subject_to_pronoun(lang, subject):
+    if(lang == 'Spanish'):
+        if(subject == '1ppl'):
+            pronoun = 'nosotros'
+        elif(subject == '1psing'):
+            pronoun = 'yo'
+        elif(subject == '2pfam'):
+            pronoun = 'tu'
+        elif(subject == '2pfampl'):
+            pronoun = 'ustedes'
+        elif(subject == '2ppol'):
+            pronoun = 'usted'
+        elif(subject == '2ppolpl'):
+            pronoun = 'ustedes'
+        elif(subject == '3ppl'):
+            pronoun = random.choice(['ellos', 'ellas'])
+        elif(subject == '3psing'):
+            pronoun = random.choice(['el', 'ella'])
+
+    return pronoun
