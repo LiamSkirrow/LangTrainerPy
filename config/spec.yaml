@@ -6,7 +6,7 @@ specs:
     cases: ['nominative', 'accusative', 'dative', 'genitive']
     nounsInflect: 0
     verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
-    tenses: ['present', 'future', 'simple-past', 'pres-perf']
+    tenses: ['present', 'future', 'simple_past', 'pres_perf']
   Russian:
     numGenders: 3
     genders: ['m', 'f', 'n']
@@ -34,8 +34,8 @@ specs:
     numCases: 0
     cases: []
     nounsInflect: 0
-    verbConjugations: ['1psing', '1ppl', '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
-    tenses: ['present', 'present-cont', 'future', 'simple-past', 'imperfect-past', 'present-perf', 'conditional']
+    verbConjugations: ['1psing', '1ppl'] #, '2pfam', '2pfampl', '2ppol', '2ppolpl', '3psing', '3ppl']
+    tenses: ['present', 'present_cont'] #, 'future', 'simple_past', 'imperfect_past', 'present_perf', 'conditional']
 
 
 # TODO:

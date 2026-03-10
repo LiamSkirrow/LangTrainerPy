@@ -49,7 +49,7 @@ def derive_ending(lang, word, mode, subject, tense):
                         print('Unrecognised subject! Bug detected, exiting...')
                         exit(0)
 
-            elif(tense == 'simple-past'):
+            elif(tense == 'simple_past'):
                 if(word[-2:] == 'ar'): # TODO: potential index out of bounds bug
                     if(subject == '1psing'):
                         retval = word[0:-2] + 'é'
@@ -91,7 +91,7 @@ def derive_ending(lang, word, mode, subject, tense):
                         print('Unrecognised subject! Bug detected, exiting...')
                         exit(0)
 
-            elif(tense == 'present-cont'):
+            elif(tense == 'present_cont'):
                 if(word[-2:] == 'ar'): # TODO: potential index out of bounds bug
                     if(subject == '1psing'):
                         retval = 'estoy ' + word[0:-2] + 'ando'
@@ -133,7 +133,7 @@ def derive_ending(lang, word, mode, subject, tense):
                         print('Unrecognised subject! Bug detected, exiting...')
                         exit(0)
             
-            elif(tense == 'present-perf'):
+            elif(tense == 'present_perf'):
                 if(word[-2:] == 'ar'): # TODO: potential index out of bounds bug
                     if(subject == '1psing'):
                         retval = 'he ' + word[0:-2] + 'ado'
@@ -175,7 +175,7 @@ def derive_ending(lang, word, mode, subject, tense):
                         print('Unrecognised subject! Bug detected, exiting...')
                         exit(0)
 
-            elif(tense == 'imperfect-past'):
+            elif(tense == 'imperfect_past'):
                 if(word[-2:] == 'ar'): # TODO: potential index out of bounds bug
                     if(subject == '1psing'):
                         retval = word[0:-2] + 'aba'
