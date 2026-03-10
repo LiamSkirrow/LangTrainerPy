@@ -58,12 +58,14 @@ parser.add_argument("--editverb", type=str, nargs=2,
 parser.add_argument("-t", "--trainverbs", type=str, nargs='+',
                     help="Enter training mode, drill existing vocab")
 
-# TODO: add args to dump all verbs, nouns, adjs, preps individually... Also add functionality
-#       to dump uninflected (unconjugated/undeclined) words or alternatively dump with all the inflections
-#       indent nicely to make readable... give total word count etc etc
-# refer to this answer -> https://stackoverflow.com/questions/16967790/argparse-two-arguments-depend-on-each-other/16968580#16968580
+parser.add_argument("-T", "--tenses", type=str, nargs='+',
+                    help="Selection of tenses to drill, must be used in conjunction with --trainverbs")
 
 args = parser.parse_args()
+
+# assert arg dependencies
+if (args.tenses and (args.trainverbs is None)):
+    parser.error("--tenses requires --trainverbs")
 
 list_langs  = args.listlangs
 add_lang    = args.addlang
@@ -78,6 +80,7 @@ edit_verb   = args.editverb
 get_verb    = args.getverb
 get_verbs   = args.getverbs
 train_verbs = args.trainverbs
+user_tenses = args.tenses
 
 # print out the available languages
 def inspectYaml(loadedYaml, mode, lang_name):
@@ -301,7 +304,9 @@ if __name__ == "__main__":
             lang = loadedYaml['languages'][train_verbs[0]]
             langSpec = loadedSpecYaml['specs'][train_verbs[0]]
             verbs = lang['verbs']
+            tenses = langSpec['tenses']
             verb_selection = []
+            tense_selection = []
             if(len(train_verbs) == 1):
                 verb_selection = verbs
             else:
@@ -311,39 +316,41 @@ if __name__ == "__main__":
                     if(verb not in verbs):
                         print('Error! Unrecognised verb: ' + verb + '\n\nRerun with supported verbs only, or add new verb with arg --addverb')
                         exit(0)
-                    verb_selection.append(verb)                    
+                    verb_selection.append(verb)    
+
+            # if --tenses is not given, we select from all possible tenses
+            if(user_tenses is None):
+                tense_selection = tenses
+            else:
+                # iterate over the supplied tenses in argument
+                for tense in user_tenses:
+                    if(tense not in tenses):
+                        print('Error! Unrecognised tense: ' + tense + '\n\nRerun with supported tenses only')
+                        exit(0)
+                    else:
+                        tense_selection.append(tense)
                         
         else:
             print('Unrecognised language \'' + train_verbs[0] + '\'...\n')
             inspectYaml(loadedYaml, MODE_LANG_LIST, '')
 
-
-        # print(verb_selection)
-
         answers = []
-        # incorrect_answers = []
 
         while(True):
             # randomly select an infinitive from the available verbs
             random_verb = random.choice(verb_selection)
             random_verb_en = lang['verbs-en-inf'][random_verb]
 
-            # print(random_verb)
-
             # given the size of tenses and verbConjugations in lang spec, index the lists using a random number and 
             # select an entry from tense and verbConjugations.
-            random_tense   = random.choice(langSpec['tenses'])
+            random_tense   = random.choice(tense_selection)
             random_subject = random.choice(langSpec['verbConjugations'])
 
             # concatenate 'verbs' with 'tense' with 'verbConjugations' to give something like verbs-future-1ppl
             concat_str = 'verbs-' + random_tense + '-' + random_subject
 
-            # print(concat_str)
-
             # use this generated string to look up the relevant language yaml dict, and grab a word from there
             training_verb = lang[concat_str][random_verb]
-
-            # print(training_verb)
 
             # create a card to be answered by the user, displaying the pronoun
             # as well as the tense to be supplied, and maybe mood as well in a future version (indicative, subjunctive, imperative...)
@@ -368,14 +375,19 @@ if __name__ == "__main__":
                 print('You said: ' + resp[0] + ', correct answer is: ' + resp[1] + ' ' + resp[2])
 
             # - add fancy terminal UI for use after all the above is done
-            # - add a way to log the responses, keep track of incorrectly answered responses and print summary on exit. 
             # - include a drilling mode that marks tense-subject combos as 'answered' so that they don't come up again in a given
             #   practice session. This would mean that you could drill all tense-subject combos of a specific selection of verbs to make
             #   sure you know them all
             #   - this would involve deleting an entry from verb_selection[] every time it's answered correctly, such that all the vocab
             #     is given an opportunity to be tested and there's a logical endpoint for each training session. 
-        
 
+            # TODO: thoughts on supporting drilling mode
+            # the implementation is made far easier if I pre-allocate a big list that is a subset of language.yaml's verb-tense-subject 
+            # combinations. Because once a certain combination is chosen (a row in the YAML) it can just be removed from the list, and 
+            # therefore won't be drawn upon again.
+            # - I need to figure out which verbs and tenses are supplied by the user, and then populate a list of the existing 'concat_str'
+            #   and then start randomly selecting which concat_str (essentially row in the YAML) to use, and then remove from the list.
+        
 
         # TODO: note:
         # don't foget to indicate both tense=[past, present, future] and also aspect=[perf, imperf] for the Slavic languages...
