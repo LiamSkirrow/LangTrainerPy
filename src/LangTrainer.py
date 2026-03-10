@@ -319,6 +319,9 @@ if __name__ == "__main__":
 
         # print(verb_selection)
 
+        answers = []
+        # incorrect_answers = []
+
         while(True):
             # randomly select an infinitive from the available verbs
             random_verb = random.choice(verb_selection)
@@ -349,11 +352,27 @@ if __name__ == "__main__":
             user_resp = input()
             if(user_resp == training_verb):
                 print('Correct!\n')
+            elif(user_resp == 'exit'):
+                break
             else:
                 print('Incorrect! Answer was ' + training_verb + '\n')
+                # store a record of the incorrectly answered training word
+                if((training_pronoun, training_verb) not in answers):
+                    answers.append((user_resp, training_pronoun, training_verb))
+                    # incorrect_answers.append(user_resp)
+            
+        if(len(answers) > 0):
+            print('Summary of incorrect responses...')
+            for resp in answers:
+                print('You said: ' + resp[0] + ', correct answer is: ' + resp[1] + ' ' + resp[2])
 
             # - add fancy terminal UI for use after all the above is done
             # - add a way to log the responses, keep track of incorrectly answered responses and print summary on exit. 
+            # - include a drilling mode that marks tense-subject combos as 'answered' so that they don't come up again in a given
+            #   practice session. This would mean that you could drill all tense-subject combos of a specific selection of verbs to make
+            #   sure you know them all
+            #   - this would involve deleting an entry from verb_selection[] every time it's answered correctly, such that all the vocab
+            #     is given an opportunity to be tested and there's a logical endpoint for each training session. 
         
 
 
