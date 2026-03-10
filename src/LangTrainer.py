@@ -158,7 +158,8 @@ def writeToYamlFile(data, loadedYaml, loadedSpecYaml, yamlFile, vocab_class, mod
         lang = loadedYaml['languages'][data[0]]
         langSpec = loadedSpecYaml['specs'][data[0]]
         # append the new vocab to the existing vocab list
-        lang['verbs'].append(data[1])
+        if(data[1] not in lang['verbs']):
+            lang['verbs'].append(data[1])
         lang['verbs-en-inf'][data[1]]         = input('Enter English infinitive: ')
         lang['verbs-en-simple-past'][data[1]] = input('Enter English simple past: ')
         # automatically fill in all the verb tenses that exist in the language, for every possible subject
