@@ -346,68 +346,65 @@ if __name__ == "__main__":
             concat_str_list_cpy = concat_str_list.copy()
             verb_tense_subject_dict[verb] = concat_str_list_cpy
 
-        while(True):
-            print(verb_tense_subject_dict)
-            # randomly select an infinitive from the available verbs
-            random_verb = random.choice(verb_selection)
-            random_verb_en = lang['verbs-en-inf'][random_verb]
+        try:
+            while(True):
+                print(verb_tense_subject_dict)
+                # randomly select an infinitive from the available verbs
+                random_verb = random.choice(verb_selection)
+                random_verb_en = lang['verbs-en-inf'][random_verb]
 
-            # use this generated string to look up the relevant language yaml dict, and grab a word from there
-            random_lookup = random.choice(verb_tense_subject_dict[random_verb])
-            throwaway, chosen_tense, chosen_subject = random_lookup.split('-')
-            training_verb = lang[random_lookup][random_verb]
+                # use this generated string to look up the relevant language yaml dict, and grab a word from there
+                random_lookup = random.choice(verb_tense_subject_dict[random_verb])
+                throwaway, chosen_tense, chosen_subject = random_lookup.split('-')
+                training_verb = lang[random_lookup][random_verb]
 
-            # create a card to be answered by the user, displaying the pronoun
-            # as well as the tense to be supplied, and maybe mood as well in a future version (indicative, subjunctive, imperative...)
-            training_pronoun = map_subject_to_pronoun(train_verbs[0], chosen_subject)
+                # create a card to be answered by the user, displaying the pronoun
+                # as well as the tense to be supplied, and maybe mood as well in a future version (indicative, subjunctive, imperative...)
+                training_pronoun = map_subject_to_pronoun(train_verbs[0], chosen_subject)
 
-            # TODO:
-            # drill mode is now the default, but include a --freemode which doesn't delete entries from verb_tense_subject_dict
-            # and can essentially just last forever until the user types 'exit'
+                # TODO:
+                # drill mode is now the default, but include a --freemode which doesn't delete entries from verb_tense_subject_dict
+                # and can essentially just last forever until the user types 'exit'
 
-            print(random_verb_en + ', ' + chosen_tense + '\n' + training_pronoun + '_____?\n')
-            user_resp = input()
-            if(user_resp == training_verb):
-                print('Correct!\n')
-                # remove entry from the dictionary that tracks the tense-subject combo for each verb
-                # del verb_tense_subject_dict[random_verb]
-                verb_tense_subject_dict[random_verb].remove(random_lookup)
-                # check if we've emptied out the verb's list of subjects, if so, remove verb from dictionary completely
-                if(not verb_tense_subject_dict[random_verb]):
-                    del verb_tense_subject_dict[random_verb]
-                    verb_selection.remove(random_verb)
-                    if(not verb_tense_subject_dict):
-                        # check if we've emptied out the dict completely, if so no verbs remaining, all done!
-                        print('All exercises complete! Exiting...')
-                        break
-            elif(user_resp == 'exit'):
-                break
-            else:
-                print('Incorrect! Answer was ' + training_verb + '\n')
-                # store a record of the incorrectly answered training word
-                if((training_pronoun, training_verb) not in answers):
-                    answers.append((user_resp, training_pronoun, training_verb))
-                    # incorrect_answers.append(user_resp)
-            
-        if(len(answers) > 0):
-            print('Summary of incorrect responses...')
-            for resp in answers:
-                print('You said: ' + resp[0] + ', correct answer is: ' + resp[1] + ' ' + resp[2])
+                print(random_verb_en + ', ' + chosen_tense + '\n' + training_pronoun + '_____?\n')
+                user_resp = input()
+                if(user_resp == training_verb):
+                    print('Correct!\n')
+                    # remove entry from the dictionary that tracks the tense-subject combo for each verb
+                    # del verb_tense_subject_dict[random_verb]
+                    verb_tense_subject_dict[random_verb].remove(random_lookup)
+                    # check if we've emptied out the verb's list of subjects, if so, remove verb from dictionary completely
+                    if(not verb_tense_subject_dict[random_verb]):
+                        del verb_tense_subject_dict[random_verb]
+                        verb_selection.remove(random_verb)
+                        if(not verb_tense_subject_dict):
+                            # check if we've emptied out the dict completely, if so no verbs remaining, all done!
+                            print('All exercises complete! Exiting...')
+                            break
+                else:
+                    print('Incorrect! Answer was ' + training_verb + '\n')
+                    # store a record of the incorrectly answered training word
+                    if((training_pronoun, training_verb) not in answers):
+                        answers.append((user_resp, training_pronoun, training_verb))
+                        # incorrect_answers.append(user_resp)
+                
+            if(len(answers) > 0):
+                print(' Exiting! Summary of incorrect responses...')
+                for resp in answers:
+                    print('You said: ' + resp[0] + ', correct answer is: ' + resp[1] + ' ' + resp[2])
+
+
 
             # - add fancy terminal UI for use after all the above is done
-            # - include a drilling mode that marks tense-subject combos as 'answered' so that they don't come up again in a given
-            #   practice session. This would mean that you could drill all tense-subject combos of a specific selection of verbs to make
-            #   sure you know them all
-            #   - this would involve deleting an entry from verb_selection[] every time it's answered correctly, such that all the vocab
-            #     is given an opportunity to be tested and there's a logical endpoint for each training session. 
 
-            # TODO: thoughts on supporting drilling mode
-            # the implementation is made far easier if I pre-allocate a big list that is a subset of language.yaml's verb-tense-subject 
-            # combinations. Because once a certain combination is chosen (a row in the YAML) it can just be removed from the list, and 
-            # therefore won't be drawn upon again.
-            # - I need to figure out which verbs and tenses are supplied by the user, and then populate a list of the existing 'concat_str_list'
-            #   and then start randomly selecting which concat_str_list (essentially row in the YAML) to use, and then remove from the list.
-        
 
-        # TODO: note:
-        # don't foget to indicate both tense=[past, present, future] and also aspect=[perf, imperf] for the Slavic languages...
+
+
+            # TODO: note:
+            # don't foget to indicate both tense=[past, present, future] and also aspect=[perf, imperf] for the Slavic languages...
+
+        except KeyboardInterrupt:
+            if(len(answers) > 0):
+                print(' Exiting! Summary of incorrect responses...')
+                for resp in answers:
+                    print('You said: ' + resp[0] + ', correct answer is: ' + resp[1] + ' ' + resp[2])
