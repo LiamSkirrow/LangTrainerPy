@@ -1,7 +1,7 @@
 # main file for LangTrainerPy
 
 from argparse import ArgumentParser
-import yaml, random
+import yaml, random, os
 from helperFunctions import derive_ending, map_subject_to_pronoun
 
 # must be run from the project's top level directory
@@ -348,6 +348,8 @@ if __name__ == "__main__":
 
         try:
             while(True):
+                os.system('clear')
+
                 print(verb_tense_subject_dict)
                 # randomly select an infinitive from the available verbs
                 random_verb = random.choice(verb_selection)
@@ -396,6 +398,8 @@ if __name__ == "__main__":
 
 
             # - add fancy terminal UI for use after all the above is done
+            #   - to do this we need to upgrade our Python version in order to use Textualize
+            #   - need to install Python 3.9+, and then specify in the venv that we're using that version
 
 
 
